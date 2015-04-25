@@ -26,7 +26,7 @@ for line in open(args.filename):
         tweet = json.loads(line)
     except:
         continue
-    if 'retweet_status' in tweet and not args.include_retweets:
+    if 'retweeted_status' in tweet and not args.include_retweets:
         continue
     if tweet['retweet_count'] < args.min_retweet:
         continue
