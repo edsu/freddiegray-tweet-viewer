@@ -63,19 +63,16 @@ function addTweet() {
     $(t).style('margin', '30px');
   });
   count += 1;
-  if (count < ids.length) {
+  if (ids.length > 0) {
     setTimeout(addTweet, refresh);
   }
 }
 
 function getId() {
-  while (true) {
-    var id = ids[Math.floor(Math.random() * ids.length)];
-    if (! seen[id]) {
-      seen[id] = true;
-      return id;
-    }
-  }
+  var i = Math.floor(Math.random() * ids.length);
+  var id = ids[i];
+  ids.splice(i, 1);
+  return id;
 }
 
 $(run);
