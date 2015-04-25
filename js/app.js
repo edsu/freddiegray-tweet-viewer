@@ -5,6 +5,7 @@
 var refresh = 4000;
 var count = 0;
 var tweetWidth = 550;
+var seen = {};
 
 function run() {
   waitForTwttr(function() {
@@ -26,7 +27,7 @@ function addDivs() {
   // otherwise do we have room for more than one tweet?
   else {
     var w = 100;
-    var middle = parseInt(height) / 2;
+    var middle = parseInt(height, 10) / 2;
     while (w < (width - tweetWidth)) {
       var div = $('<div class="tweet"></div>');
       div.css("position", "absolute");
@@ -61,12 +62,20 @@ function addTweet() {
   }).then(function(t) {
     $(t).style('margin', '30px');
   });
-  setTimeout(addTweet, refresh);
   count += 1;
+  if (count < ids.length) {
+    setTimeout(addTweet, refresh);
+  }
 }
 
 function getId() {
-  return ids[Math.floor(Math.random() * ids.length)];
+  while (true) {
+    var id = ids[Math.floor(Math.random() * ids.length)];
+    if (! seen[id]) {
+      seen[id] = true;
+      return id;
+    }
+  }
 }
 
 $(run);
