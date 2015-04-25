@@ -20,8 +20,14 @@ advertising, etc. If you collected your data from the live stream you won't
 have the retweet count; but here's a trick for getting the latest
 retweet counts for your data.
 
+    # get the ids as a text file
     images.py --text tweets.json > ids.txt
-    twarc.py --hydrate ids.txt > newer_tweets.json
+
+    # hydrate the ids (which gets the latest retweet counts)
+    twarc.py --hydrate ids.txt > hydrated.json
+
+    # generate the tweet ids with a minimum of 5 retweets
+    images.py --min_retweet 5 hydrated.json > ids.js
 
 Any tweets that have been deleted won't appear in newer_tweets.json. But
 you won't be able to display these anyway, so maybe that's a good thing.
